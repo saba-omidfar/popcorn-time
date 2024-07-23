@@ -1,12 +1,11 @@
 import "./App.css";
+import { useRoutes } from "react-router-dom";
+import routes from "./routes";
 
 function App() {
+  const router = useRoutes(routes);
 
-  return (
-    <>
-      <h1>Popcorn Time</h1>
-    </>
-  );
+  return <>{router}</>;
 }
 
 export default App;

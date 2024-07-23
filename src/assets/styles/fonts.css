@@ -1,0 +1,14 @@
+@font-face {
+  font-family: IRANSans;
+  src: url(../fonts/IRANSans/IRANSans.ttf);
+}
+
+@font-face {
+  font-family: Montserrat;
+  src: url(../fonts/Montserrat/static/Montserrat-Medium.ttf);
+}
+
+@font-face {
+  font-family: VistaSans;
+  src: url(../fonts/VistaSans/VistaSansOT-Bold.ttf);
+}
