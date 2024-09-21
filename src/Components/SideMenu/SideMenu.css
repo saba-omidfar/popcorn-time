@@ -1,0 +1,233 @@
+/* Start SideMeny Styles  */
+
+.side-menu {
+  direction: rtl;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 250px;
+  height: 100vh;
+  background-color: #000;
+  color: var(--gray-color);
+  transform: translateX(+101%);
+  transition: transform 0.5s ease-in-out;
+  z-index: 3;
+}
+
+.side-menu__icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: var(--white-color);
+  font-size: 25px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.side-menu__close-icon {
+  font-size: 20px;
+  color: var(--gray-color);
+  cursor: pointer;
+  transition: transform ease-in 0.3s;
+}
+
+.side-menu__close-icon:hover {
+  transform: rotate(90deg);
+}
+
+.side-menu.open {
+  transform: translateX(0);
+}
+
+.side-menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-menu ul .section-title {
+  font-size: 15px;
+}
+
+.side-menu .side-menu__category-item li {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--dark-color);
+  font-weight: bold;
+  width: 100%;
+}
+
+.side-menu .side-menu__category-item li:hover {
+  color: var(--gray-color);
+}
+
+.side-menu .side-menu__category-item span {
+  color: var(--gray-color);
+  transition: all ease-in .3s;
+}
+
+.side-menu .side-menu__category-item span:hover {
+  color: var(--primary-color);
+}
+
+.side-menu.open .searchbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 0;
+  margin-top: 4rem;
+}
+
+.side-menu.open .searchbar__input {
+  width: 220px;
+  border-radius: 100px;
+  padding: 5px 10px;
+  background-color: var(--dark-color);
+  border: none;
+  color: #000;
+  font-size: 14px;
+}
+
+.side-menu.open .search-icon {
+  position: absolute;
+  left: 10px;
+  bottom: 11px;
+  font-size: 19px;
+  color: #191919;
+}
+
+.user-image__wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  position: relative;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.user-image {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+.username {
+  font-weight: bold;
+  font-family: "Montserrat";
+  color: var(--primary-color);
+  font-size: 15px;
+}
+
+.sign-in__link {
+  font-weight: bold;
+  font-family: "IRANYekan";
+  color: var(--primary-color);
+  font-size: 15px;
+}
+
+.sign-in__link:hover {
+  color: var(--primary-color);
+}
+
+.side-menu__wrapper {
+  width: 100%;
+  padding: 20px 32px !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-menu__category-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: self-start;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: all ease-in-out 0.3s;
+}
+
+.side-menu__category-item:hover {
+  color: var(--primary-color);
+}
+
+.side-menu__category-item li {
+  margin: 2px 15px 2px;
+}
+
+.side-menu__setting-icon {
+  font-size: 25px;
+}
+
+.side-menu__genre-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  margin: 0 20px !important;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.side-menu__genres-wrapper.open {
+  max-height: 500px;
+}
+
+.side-menu__category-item {
+  margin-bottom: 10px; /* فاصله بین هر دسته‌بندی */
+}
+
+.side-menu__genre-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--dark-color);
+  width: 100%;
+}
+
+.side-menu__genre-item:hover {
+  color: var(--primary-color);
+}
+
+.side-menu__genre-item::before {
+  background-color: #fff;
+  border-radius: 0.1rem;
+  content: "";
+  float: right;
+  height: 0.2rem;
+  margin: 0.3rem 0 0 0.8rem;
+  width: 1rem;
+}
+
+.line {
+  background-color: var(--dark-color);
+  border-radius: 0.1rem;
+  height: 0.1rem;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.line_active {
+  transform: scaleX(1);
+  margin: 0.8rem 0;
+}
+
+.side-menu__footer {
+  width: 100%;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+}

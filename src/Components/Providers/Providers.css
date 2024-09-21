@@ -1,0 +1,36 @@
+.providers_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: no-wrap;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* .providers_wrapper a {
+  width: 30px;
+  height: 30px;
+  margin: 2px 0;
+} */
+
+.provider_img {
+  display: block;
+  width: 154px;
+  height: 20px;
+}
+
+.modal-providers-container-section {
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.provider_icon {
+  color: var(--primary-color);
+}
+
+.providers-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--primary-color);
+}

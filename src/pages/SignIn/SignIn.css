@@ -1,0 +1,29 @@
+.login-title {
+  text-align: right;
+  color: var(--gray-color);
+  margin: 0 0 50px 0;
+}
+
+.login-text {
+  color: var(--primary-color);
+  padding: 5px 0;
+}
+
+.logout-error {
+  color: var(--primary-color);
+}
+
+.signUp-text {
+  color: var(--gray-color);
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.signUp-link {
+  margin: 0 2px;
+  color: var(--primary-color);
+}
+
+.signUp-link:hover {
+  color: var(--primary-color);
+}

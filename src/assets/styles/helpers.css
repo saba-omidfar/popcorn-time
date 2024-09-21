@@ -1,0 +1,15 @@
+.ellipsis {
+  /* white-space: nowrap; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* display: inline-block; */
+  direction: ltr;
+}
+
+small {
+  font-size: 1.2rem;
+}
+
+strong {
+  font-size: 1.5rem;
+}
