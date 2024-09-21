@@ -1,0 +1,26 @@
+.favorite {
+  justify-content: start;
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  margin: 0;
+  padding: 20px;
+  background-color: #000;
+  color: #fff;
+  overflow: hidden;
+}
+
+.favorite-results__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 5vh;
+  margin-top: 40px;
+}
+
+.favorite-results__title {
+  font-family: "IRANYekan";
+  font-size: 14px;
+  color: var(--gray-color);
+}

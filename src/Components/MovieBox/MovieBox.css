@@ -1,0 +1,148 @@
+.movie-card__wrapper {
+  display: flex;
+  align-items: start;
+  width: 100%;
+  height: 130px;
+  max-height: 130px;
+}
+
+.movie-card__wrapper:hover .movie-card__title-list {
+  color: var(--primary-color);
+}
+
+.movie-card:hover .movie-card__title {
+  color: var(--primary-color);
+}
+
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.movie-card__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /* height: 130px; */
+  height: 160px;
+  background-color: #333;
+  border-radius: 20px;
+  position: relative;
+}
+
+.movie-card__image {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 20px;
+}
+
+/* .movie-card__image-wrapper {
+  position: relative;
+}
+
+.movie-card__image-wrapper::before {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), #0c1012);
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+} */
+
+.bottom_cover_rate {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.fav-icon {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  color: #fff;
+}
+
+.movie-card__play-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 100%;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movie-card__play-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+}
+
+.movie-card__title {
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+  font-family: "IRANYekan";
+  font-size: 14px;
+  color: var(--gray-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  direction: ltr;
+
+  transition: all ease-in-out 0.3s;
+}
+
+.movie-card__title-list {
+  text-align: right;
+  font-family: "IRANYekan";
+  font-size: 15px;
+  color: var(--gray-color);
+  transition: all ease-in-out 0.3s;
+}
+
+.movie__storyline {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Truncate after 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-align: left;
+  font-family: "IRANYekan";
+  font-size: 10px; /* Adjust based on your design */
+  color: var(--dark-color);
+  line-height: 1.2em; /* Example line-height, adjust as needed */
+  max-height: calc(
+    1.2em * 3
+  ); /* Adjust based on line-height and desired lines */
+}
+
+.imdbRate {
+  color: #f0f0f0;
+  text-align: right;
+  padding: 0 10px;
+}
+
+
+.imdbRate strong {
+font-size: 2rem;
+}

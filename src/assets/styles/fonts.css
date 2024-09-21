@@ -4,6 +4,11 @@
 }
 
 @font-face {
+  font-family: IRANYekan;
+  src: url(../fonts/IRANYekan/Yekan.woff2);
+}
+
+@font-face {
   font-family: Montserrat;
   src: url(../fonts/Montserrat/static/Montserrat-Medium.ttf);
 }

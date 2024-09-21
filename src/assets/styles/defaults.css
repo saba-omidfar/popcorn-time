@@ -10,6 +10,8 @@ body {
   font-size: 1.6rem;
   font-family: var(--primary-font);
   direction: rtl;
+  min-width: 370px;
+  overflow: hidden;
 }
 
 *,
@@ -34,3 +36,29 @@ i {
 }
 
 /* Finish Default Styles */
+
+/* Start Scroll-Y Styles */
+
+::-webkit-scrollbar {
+  width: 4px;
+  margin-left: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #222;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: darken(var(--primary-color, 10%));
+}
+
+.episodes::-webkit-scrollbar-thumb:active {
+  background-color: darken(var(--primary-color, 20%));
+}
+
+/* End Scroll-Y Styles */
