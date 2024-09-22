@@ -1,0 +1,68 @@
+.clear-rate {
+  text-align: right;
+  font-size: 10px;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-weight: bold;
+  transition: all ease-in 0.3s;
+}
+
+.rate-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  min-width: 75px;
+  height: 35px;
+  min-height: 35px;
+  border-radius: 8px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: 0.15s ease;
+  font-size: 12px;
+  font-family: "IRANYekan";
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.MuiSlider-thumb {
+  display: flex;
+  width: 26px !important;
+  height: 15px !important;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: 1.2rem;
+  line-height: 1;
+  font-weight: 600;
+  background-color: var(--primary-color) !important;
+  border-radius: 9999px !important;
+  border-style: none;
+}
+
+.MuiSlider-rail {
+  height: 5px !important;
+  background-color: var(--gray-color) !important;
+  opacity: 1 !important;
+}
+
+.MuiSlider-mark {
+  top: 74% !important;
+  width: 1px !important;
+  background-color: var(--primary-color) !important;
+}
+
+.MuiSlider-track {
+  height: 5px !important;
+  border: none !important;
+}
+
+.MuiSlider-valueLabel {
+  background-color: #000 !important;
+  color: #fff !important;
+  width: auto !important;
+  font-family: "IRANYekan" !important;
+  border-radius: 2px !important;
+}

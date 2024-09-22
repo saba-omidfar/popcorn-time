@@ -1,0 +1,71 @@
+.category {
+  display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+  margin-bottom: 15px;
+}
+
+.owl-item {
+  width: 100px;
+  height: 25%;
+  margin-bottom: 15px;
+}
+
+.owl-carousel {
+  height: 165px;
+}
+
+/* .category:not(:nth-child(1)) {
+  margin-top: 10px;
+} */
+
+.category-header {
+  text-align: right;
+}
+
+.category-title {
+  font-family: "IRANYekan";
+  font-size: 15px;
+  color: var(--dark-color);
+  margin-bottom: 10px;
+}
+
+.swiper-pagination {
+  position: relative;
+  margin-top: 5px;
+  top: 120px !important;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: var(--gray-color) !important;
+  opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--gray-color);
+  opacity: 1;
+}
+
+.swiper-pagination-lock {
+  display: block !important;
+}
+
+.swiper-scrollbar-drag {
+  background-color: var(--gray-color);
+  width: 45px !important;
+}
+
+.swiper-horizontal > .swiper-scrollbar,
+.swiper-scrollbar.swiper-scrollbar-horizontal {
+  background-color: var(--dark-color);
+  left: var(--swiper-scrollbar-sides-offset, 13%);
+  bottom: var(--swiper-scrollbar-bottom, 4px);
+  width: calc(100% - 3 * var(--swiper-scrollbar-sides-offset, 10%));
+  height: 3px;
+}
+
+.swiper-scrollbar {
+  border-radius: 100px;
+}
