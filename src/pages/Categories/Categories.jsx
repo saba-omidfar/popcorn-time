@@ -225,7 +225,7 @@ function Categories() {
             <img src="/images/logo/papcorn-logo3.png" alt="" />
           </div>
           <div className="category-results__header">
-            <span className="category-results__title">دسته‌بندی‌ها</span>
+            <span className="category-results__title">دسته‌بندی‌</span>
             <Link to="/">
               <IoArrowBackCircleOutline className="category-back__icon" />
             </Link>
@@ -235,7 +235,7 @@ function Categories() {
               <div className="category-header">
                 <span className="category-title">فیلم</span>
                 <Link to="/movies" className="all-categories">
-                  تمامی فیلم‌ها
+                  همه
                 </Link>
               </div>
               <div className="category">
@@ -259,9 +259,9 @@ function Categories() {
             </div>
             <div className="category">
               <div className="category-header">
-                <span className="category-title">سریال‌ها</span>
+                <span className="category-title">سریال</span>
                 <Link to="/series" className="all-categories">
-                  تمامی سریال‌ها
+                  همه
                 </Link>
               </div>
               <div className="category">

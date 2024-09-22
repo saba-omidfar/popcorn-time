@@ -7,11 +7,13 @@ import { IoIosClose } from "react-icons/io";
 import "./Providers.css";
 
 function Providers({
-  media,
+  mediaType,
   setShowProvidersModal,
   mediaId,
   mediaDetails,
 }) {
+  console.log("mediaType:", mediaType);
+  
   const { apiReadAccessToken } = useSession();
   const [tvProviders, setTvProviders] = useState({});
   const [movieProviders, setMovieProviders] = useState({});
@@ -19,7 +21,7 @@ function Providers({
 
   const getAllSeasonProviders = () => {
     fetch(
-      `https://api.themoviedb.org/3/tv/${mediaId}/watch/providers`,
+      `https://api.themoviedb.org/3/${mediaType}/${mediaId}/watch/providers`,
       {
         method: "GET",
         headers: {
@@ -44,7 +46,7 @@ function Providers({
   };
 
   const getAllProvidersMovie = () => {
-    fetch(`https://api.themoviedb.org/3/movie/${mediaId}/watch/providers`, {
+    fetch(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/watch/providers`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${apiReadAccessToken}`,
@@ -53,6 +55,8 @@ function Providers({
     })
       .then((res) => res.json())
       .then((providersData) => {
+        console.log("providersData:", providersData);
+        
         setMovieProviders(
           providersData.results ? providersData.results.US : null
         );
@@ -66,7 +70,7 @@ function Providers({
   };
 
   useEffect(() => {
-    if (media === "movie") {
+    if (mediaType === "movie") {
       getAllProvidersMovie();
     } else {
       getAllSeasonProviders();
@@ -86,7 +90,7 @@ function Providers({
 
   // Custom Body
   const customBody =
-    media === "tv" ? (
+  mediaType === "tv" ? (
       <>
         {loading ? (
           <span className="loading-icon"></span>

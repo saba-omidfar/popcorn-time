@@ -53,7 +53,7 @@ export const GuestSessionProvider = ({ children }) => {
           setGuestSessionId(data.guest_session_id);
           localStorage.setItem("guestSessionId", data.guest_session_id);
           showToastSuccess("بصورت مهمان وارد سایت شدید");
-          window.location.href = `https://papcorntime.liara.run`;
+          window.location.href = `http://localhost:5174`;
         } else {
           console.error("Guest Session creation failed:", data);
         }

@@ -183,7 +183,6 @@
   transform: scale(1);
 }
 
-
 .slide_data_text {
   width: 80%;
   height: 45%;
@@ -198,35 +197,35 @@
 
 .slide_data_text h2 {
   color: #f0f0f0;
-  font-size:25px;
-  font-weight: 600
+  font-size: 25px;
+  font-weight: 600;
 }
 
 .slide_data_text h2 a {
-  color: #f0f0f0
+  color: #f0f0f0;
 }
 
 .slide_data_text .imdb_rate {
   color: #f0f0f0;
   display: block;
-  margin-top: 10px
+  margin-top: 10px;
 }
 
 .slide_data_text .imdb_rate strong {
   color: var(--white-color);
   font-size: 35px;
-  font-weight: 600
+  font-weight: 600;
 }
 
 .slide_data_text .imdb_rate small {
   font-size: 25px;
-  color: var(--primary-color)
+  color: var(--primary-color);
 }
 
 .slide_data_text .summary_text {
-  height: 180px;
-  min-height: 180px;
-  max-height: 180px;
+  height: 98px;
+  min-height: 98px;
+  max-height: 98px;
   color: var(--gray-color);
   font-size: 15px;
   font-weight: 400;
@@ -243,7 +242,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  margin-top: 10px
+  margin-top: 10px;
 }
 
 .slide_data_text .btnmoreHolder .btnmore {
@@ -258,5 +257,5 @@
   font-size: 700;
   height: 45px;
   justify-content: center;
-  padding: 0 20px
+  padding: 0 20px;
 }

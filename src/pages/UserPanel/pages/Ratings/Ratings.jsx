@@ -58,16 +58,15 @@ export default function Ratings() {
     NProgress.start();
 
     try {
-      const url = isGuest()
-        ? `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?language=en-US&page=1&sort_by=created_at.asc`
-        : `https://api.themoviedb.org/3/account/${accountId}/rated/movies?language=en-US&page=1&session_id=${sessionId}&sort_by=created_at.asc`;
-
-      const response = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${apiReadAccessToken}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://api.themoviedb.org/3/account/${accountId}/rated/movies?language=en-US&page=1&session_id=${sessionId}&sort_by=created_at.asc`,
+        {
+          headers: {
+            Authorization: `Bearer ${apiReadAccessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -87,7 +86,46 @@ export default function Ratings() {
         return;
       }
     } catch (error) {
+      showToastError("خطای سیستم!");
+      console.error("Error fetching rated media list:", error);
+    } finally {
       setIsLoading(false);
+      NProgress.done();
+    }
+  };
+
+  const getGuestRatedMovies = async () => {
+    NProgress.start();
+
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?language=en-US&page=1&sort_by=created_at.asc`,
+        {
+          headers: {
+            Authorization: `Bearer ${apiReadAccessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.success === false) {
+        setRatedMovies([]);
+        setTotalPages("");
+        return;
+      }
+
+      if (data.results) {
+        setRatedMovies(data.results);
+        setTotalPages(data.total_pages);
+        return;
+      }
+    } catch (error) {
       showToastError("خطای سیستم!");
       console.error("Error fetching rated media list:", error);
     } finally {
@@ -156,24 +194,23 @@ export default function Ratings() {
   const getRatedTvs = async () => {
     NProgress.start();
 
-    const url = isGuest()
-      ? `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/tv?language=en-US&page=1&sort_by=created_at.asc`
-      : `https://api.themoviedb.org/3/account/${accountId}/rated/tv?language=en-US&page=1&session_id=${sessionId}&sort_by=created_at.asc`;
-
     try {
-      const response = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${apiReadAccessToken}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://api.themoviedb.org/3/account/${accountId}/rated/tv?language=en-US&page=1&session_id=${sessionId}&sort_by=created_at.asc`,
+        {
+          headers: {
+            Authorization: `Bearer ${apiReadAccessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
       console.log(data);
-      
+
       if (data.success === false) {
         setRatedTvs([]);
         setTotalPages("");
@@ -188,14 +225,59 @@ export default function Ratings() {
       console.error("Error fetching rated media list:", error);
     } finally {
       NProgress.done();
+      setIsLoading(false);
+    }
+  };
+
+  const getGuestRatedTvs = async () => {
+    NProgress.start();
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/tv?language=en-US&page=1&sort_by=created_at.asc`,
+        {
+          headers: {
+            Authorization: `Bearer ${apiReadAccessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+
+      if (data.success === false) {
+        setRatedTvs([]);
+        setTotalPages("");
+      }
+
+      if (data.results) {
+        setRatedTvs(data.results);
+        setTotalPages(data.total_pages);
+      }
+    } catch (error) {
+      showToastError("خطای سیستم!");
+      console.error("Error fetching rated media list:", error);
+    } finally {
+      NProgress.done();
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
+    if (accountId) {
       getRatedMovies();
       getRatedTvs();
-    
-  }, [accountId, guestSessionId]);
+    }
+  }, [accountId]);
+
+  useEffect(() => {
+    if (guestSessionId) {
+      getGuestRatedMovies();
+      getGuestRatedTvs();
+    }
+  }, [guestSessionId]);
 
   return (
     <>

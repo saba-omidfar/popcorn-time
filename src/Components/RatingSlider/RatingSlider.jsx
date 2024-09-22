@@ -79,9 +79,7 @@ function RatingSlider({
           ...prevState,
           rated: { value: rating },
         }));
-        showToastSuccess(
-          rating ? "امتیاز شما تغییر داده شد" : "امتیاز شما ثبت شد"
-        );
+        showToastSuccess("امتیاز شما ثبت شد");
       }
 
       setShowRatingModal(false);

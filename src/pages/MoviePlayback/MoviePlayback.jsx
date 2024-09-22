@@ -563,7 +563,7 @@ function PlaybackPage() {
 
       {showProvidersModal && (
         <Providers
-          media="movie"
+          mediaType="movie"
           mediaId={movieID}
           mediaDetails={movieDetails}
           setShowProvidersModal={setShowProvidersModal}

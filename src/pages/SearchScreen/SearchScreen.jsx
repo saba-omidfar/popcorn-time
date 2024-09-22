@@ -191,7 +191,7 @@ function SearchScreen() {
           <div className="popular-movies__wrapper">
             <div className="category-header mb-4">
               <span className="category-title">جدیدترین فیلم‌ها</span>
-              <Link to="/movies/upcoming" className="all-categories">
+              <Link to="/movies/upcoming" className="all-categories ps-2 ">
                   همه
                 </Link>
             </div>

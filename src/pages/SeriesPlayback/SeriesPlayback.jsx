@@ -619,7 +619,7 @@ function SeriesPlayback() {
 
       {showProvidersModal && (
         <Providers
-          media="tv"
+          mediaType="tv"
           mediaId={seriesID}
           mediaDetails={seriesDetails}
           setShowProvidersModal={setShowProvidersModal}

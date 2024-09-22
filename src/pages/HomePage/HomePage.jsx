@@ -6,10 +6,6 @@ import { EffectFade, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import IOSSwitch from "../../Components/SwitchBtn/SwitchBtn";
-
 import "./HomePage.css";
 
 import { IoIosMenu } from "react-icons/io";
@@ -30,24 +26,22 @@ import NProgress from "nprogress";
 import SwitchBtn from "../../Components/SwitchBtn/SwitchBtn";
 
 function HomePage() {
+  const { apiKey } = useSession();
+
   const [isLoading, setIsLoading] = useState(true);
-  const [isToday, setIsToday] = useState(true);
+  const [isWeek, setIsWeek] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const [trendingMovies, setTrendingMovies] = useState([]);
-  const [activeMovie, setActiveMovie] = useState(null);
-
-  const { apiKey } = useSession();
-  const handleSwitchChange = (e) => {
-    setIsToday(e.target.checked);
-  };
+  const [activeMovie, setActiveMovie] = useState({});
 
   const getAllTrendingMoviesAndSeries = () => {
     setIsLoading(true);
     setIsLoaded(false);
     NProgress.start();
 
-    const timePeriod = isToday ? "day" : "week";
+    const timePeriod = isWeek ? "week" : "day";
+
     const trendingMovieFetch = fetch(
       `https://api.themoviedb.org/3/trending/movie/${timePeriod}?language=en-US&api_key=${apiKey}`,
       {
@@ -77,6 +71,7 @@ function HomePage() {
           const combinedResults = [...movieData.results, ...tvData.results];
 
           setTrendingMovies(combinedResults);
+          setActiveMovie(combinedResults[0]);
         } else {
           throw new Error(
             `Http error! movie status: ${movieRes.status}, tv status: ${tvRes.status}`
@@ -93,12 +88,12 @@ function HomePage() {
       });
   };
 
-  useEffect(() => {
-    getAllTrendingMoviesAndSeries();
-  }, [isToday]);
-
   const toggleSideMenu = () => {
     setSideMenuOpen(!sideMenuOpen);
+  };
+
+  const handleSwitchChange = (e) => {
+    setIsWeek(e.target.checked);
   };
 
   const swiperOptions = {
@@ -108,6 +103,8 @@ function HomePage() {
     navigation: true,
     pagination: { clickable: true },
     scrollbar: { draggable: true },
+    observer: true,
+    observeParents: true,
     modules: [Autoplay, EffectFade],
     autoplay: {
       delay: 5000,
@@ -115,82 +112,85 @@ function HomePage() {
     },
     onSlideChange: (swiper) => {
       const currentMovie = trendingMovies[swiper.realIndex];
-      setActiveMovie(currentMovie);
+      if (currentMovie) {
+        setActiveMovie(currentMovie);
+      }
     },
   };
+
+  useEffect(() => {
+    getAllTrendingMoviesAndSeries();
+  }, [isWeek]);
 
   return (
     <>
       <SideMenu isOpen={sideMenuOpen} setSideMenuOpen={setSideMenuOpen} />
-      {isLoaded && (
-        <div className={`home ${sideMenuOpen && "blur-background "}`}>
-          <div className="side-menu__icon" onClick={toggleSideMenu}>
-            <IoIosMenu />
-          </div>
-          <div className="movie-intro__wrap">
-            {activeMovie ? (
-              <img
-                src={`https://media.themoviedb.org/t/p/w300${activeMovie.poster_path}`}
-                className="movie__image"
-                alt={`${activeMovie.title || activeMovie.name} Image`}
-              />
-            ) : (
-              <p>در حال بارگذاری اطلاعات فیلم...</p>
-            )}
-          </div>
+      <div className={`home ${sideMenuOpen && "blur-background "}`}>
+        <div className="side-menu__icon" onClick={toggleSideMenu}>
+          <IoIosMenu />
+        </div>
+        <div className="movie-intro__wrap">
+          {isLoaded && activeMovie ? (
+            <img
+              src={`https://media.themoviedb.org/t/p/w300${activeMovie.poster_path}`}
+              className="movie__image"
+              alt={`${activeMovie.title || activeMovie.name} Image`}
+            />
+          ) : (
+            <span className="loading-icon"></span>
+          )}
+        </div>
 
-          {activeMovie ? (
-            <div className="slide_data_text">
-              <h2>
-                <Link href="#">{activeMovie.name || activeMovie.title}</Link>
-              </h2>
-              {activeMovie.vote_average !== 0 ? (
-                <div className="imdb_rate">
-                  <strong className="me-2">
-                    {Math.round(activeMovie.vote_average * 10) / 10}
-                  </strong>
-                  <small>/10</small>
-                </div>
-              ) : null}
-              <div className="summary_text ellipsis">
-                {activeMovie.overview}
+        {isLoaded && activeMovie ? (
+          <div className="slide_data_text">
+            <h2>
+              <Link href="#">{activeMovie.name || activeMovie.title}</Link>
+            </h2>
+            {activeMovie.vote_average !== 0 ? (
+              <div className="imdb_rate">
+                <strong className="me-2">
+                  {Math.round(activeMovie.vote_average * 10) / 10}
+                </strong>
+                <small>/10</small>
               </div>
-              <div className="d-flex flex-column align-items-end mt-3">
-                {activeMovie.adult ? (
-                  <div className="movie-age">
-                    <FaPlus /> 18
-                  </div>
-                ) : (
-                  ""
+            ) : null}
+            <div className="summary_text ellipsis">{activeMovie.overview}</div>
+            <div className="d-flex flex-column align-items-end mt-3">
+              {activeMovie.adult ? (
+                <div className="movie-age">
+                  <FaPlus /> 18
+                </div>
+              ) : (
+                ""
+              )}
+
+              <div className="d-flex">
+                {Array(
+                  5 -
+                    Math.floor(activeMovie.vote_average / 2) -
+                    (activeMovie.vote_average % 2 >= 1 ? 1 : 0)
+                )
+                  .fill(0)
+                  .map((_, index) => (
+                    <MdOutlineStarOutline
+                      key={index}
+                      style={{ color: "orange" }}
+                    />
+                  ))}
+                {(activeMovie.vote_average % 2 >= 1 ? 1 : 0) === 1 && (
+                  <MdOutlineStarHalf style={{ color: "orange" }} />
                 )}
-
-                <div className="d-flex">
-                  {Array(
-                    5 -
-                      Math.floor(activeMovie.vote_average / 2) -
-                      (activeMovie.vote_average % 2 >= 1 ? 1 : 0)
-                  )
-                    .fill(0)
-                    .map((_, index) => (
-                      <MdOutlineStarOutline
-                        key={index}
-                        style={{ color: "orange" }}
-                      />
-                    ))}
-                  {(activeMovie.vote_average % 2 >= 1 ? 1 : 0) === 1 && (
-                    <MdOutlineStarHalf style={{ color: "orange" }} />
-                  )}
-                  {Array(Math.floor(activeMovie.vote_average / 2))
-                    .fill(0)
-                    .map((_, index) => (
-                      <MdOutlineStarPurple500
-                        key={index}
-                        style={{ color: "orange" }}
-                      />
-                    ))}
-                </div>
+                {Array(Math.floor(activeMovie.vote_average / 2))
+                  .fill(0)
+                  .map((_, index) => (
+                    <MdOutlineStarPurple500
+                      key={index}
+                      style={{ color: "orange" }}
+                    />
+                  ))}
               </div>
-              {/* <div className="btnmoreHolder">
+            </div>
+            {/* <div className="btnmoreHolder">
               <a
                 href="https://filmkio.run/series/the-lord-of-the-rings-v6/"
                 className="btnmore"
@@ -198,30 +198,29 @@ function HomePage() {
                 دانلود + ادامه
               </a>
             </div> */}
-            </div>
-          ) : (
-            <p>در حال بارگذاری اطلاعات فیلم...</p>
-          )}
+          </div>
+        ) : (
+          <p>در حال بارگذاری اطلاعات فیلم...</p>
+        )}
 
-          <div className="popular-movies__wrap">
-            <div className="d-flex flex-column flex-grow-1 h-100">
-              <div className="movie-title d-flex justify-content-between align-items-center mb-4">
-                <span>جدیدترین فیلم‌ها و سریال‌ها</span>
-                <SwitchBtn checked={isToday} onChange={handleSwitchChange} />
-              </div>
-              <div className="popular-movies__container">
-                <Swiper {...swiperOptions} dir="rtl">
-                  {trendingMovies.map((movie) => (
-                    <SwiperSlide key={movie.id}>
-                      <MovieBox isGrid={true} isSlider={false} {...movie} />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
+        <div className="popular-movies__wrap">
+          <div className="d-flex flex-column flex-grow-1 h-100">
+            <div className="movie-title d-flex justify-content-between align-items-center mb-4">
+              <span>جدیدترین فیلم‌ها و سریال‌ها</span>
+              <SwitchBtn checked={isWeek} onChange={handleSwitchChange} />
+            </div>
+            <div className="popular-movies__container">
+              <Swiper {...swiperOptions} dir="rtl">
+                {trendingMovies.map((movie) => (
+                  <SwiperSlide key={movie.id}>
+                    <MovieBox isGrid={true} isSlider={false} {...movie} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
           </div>
         </div>
-      )}
+      </div>
       <BottomBar activeBottom="home" />
     </>
   );

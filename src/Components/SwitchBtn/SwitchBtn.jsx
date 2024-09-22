@@ -11,7 +11,8 @@ const IOSSwitch = styled((props) => (
   padding: 0,
   "& .MuiSwitch-switchBase": {
     padding: 0,
-    margin: 2,
+    margin: 1,
+    left: 1,
     transitionDuration: "300ms",
     "&.Mui-checked": {
       transform: "translateX(69px)",
@@ -46,34 +47,31 @@ const IOSSwitch = styled((props) => (
 
 const SwitchBtn = ({ checked, onChange }) => {
   return (
-    <div style={{ position: 'relative', width: 144, height: 28 }}>
-      <IOSSwitch
-        checked={checked}
-        onChange={onChange}
-      />
-      <span 
+    <div style={{ position: "relative", width: 144, height: 28 }}>
+      <IOSSwitch checked={checked} onChange={onChange} />
+      <span
         style={{
-          position: 'absolute',
+          position: "absolute",
           left: 18,
           top: 4,
           fontSize: 13,
-          color: '#c4c4c4',
+          color: "#c4c4c4",
           zIndex: 1,
-          cursor: 'pointer'
+          cursor: "pointer",
         }}
         onClick={() => onChange({ target: { checked: false } })}
       >
         Today
       </span>
-      <span 
+      <span
         style={{
-          position: 'absolute',
+          position: "absolute",
           right: 9,
           top: 4,
           fontSize: 13,
-          color: '#c4c4c4',
+          color: "#c4c4c4",
           zIndex: 1,
-          cursor: 'pointer'
+          cursor: "pointer",
         }}
         onClick={() => onChange({ target: { checked: true } })}
       >

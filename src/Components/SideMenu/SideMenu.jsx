@@ -20,7 +20,7 @@ const SideMenu = ({ isOpen, setSideMenuOpen }) => {
   const [isSeriesGenreOpen, setIsSeriesGenreOpen] = useState(false);
 
   const getAllSeriesGenres = () => {
-    fetch(`https://api.themoviedb.org/3/genre/movie/list`, {
+    fetch(`https://api.themoviedb.org/3/genre/tv/list`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${apiReadAccessToken}`,
