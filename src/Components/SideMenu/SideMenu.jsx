@@ -4,11 +4,15 @@ import { Link } from "react-router-dom";
 import "./SideMenu.css";
 
 import { IoIosArrowDown } from "react-icons/io";
-import { CiSettings } from "react-icons/ci";
 import { IoCloseOutline } from "react-icons/io5";
 
 import { useSession } from "../../Contexts/sessionContext";
 import { useGuestSession } from "../../Contexts/guestSessionContext";
+
+import "nprogress/nprogress.css";
+import NProgress from "nprogress";
+
+import { showToastError } from "../Toast/Toast";
 
 const SideMenu = ({ isOpen, setSideMenuOpen }) => {
   const { sessionId, userInfos, apiReadAccessToken, logout } = useSession();
@@ -19,29 +23,64 @@ const SideMenu = ({ isOpen, setSideMenuOpen }) => {
   const [isMovieGenreOpen, setIsMovieGenreOpen] = useState(false);
   const [isSeriesGenreOpen, setIsSeriesGenreOpen] = useState(false);
 
-  const getAllSeriesGenres = () => {
-    fetch(`https://api.themoviedb.org/3/genre/tv/list`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${apiReadAccessToken}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setSerieGenres(data.genres));
+  const getAllSeriesGenres = async () => {
+    NProgress.start();
+
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/genre/tv/list`,
+        {
+          headers: {
+            Authorization: `Bearer ${apiReadAccessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setSerieGenres(data.genres);
+      
+    } catch (error) {
+      showToastError("خطای سیستم!");
+      console.error("Error fetching genre list tv:", error);
+    } finally {
+      NProgress.done();
+    }
   };
 
-  const getAllMoviesGenres = () => {
-    fetch(`https://api.themoviedb.org/3/genre/movie/list`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${apiReadAccessToken}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setMovieGenres(data.genres));
+  const getAllMoviesGenres = async () => {
+    NProgress.start();
+
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/genre/movie/list`,
+        {
+          headers: {
+            Authorization: `Bearer ${apiReadAccessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setMovieGenres(data.genres);
+      
+    } catch (error) {
+      showToastError("خطای سیستم!");
+      console.error("Error fetching genre list tv:", error);
+    } finally {
+      NProgress.done();
+    }
   };
+
 
   useEffect(() => {
     getAllSeriesGenres();
@@ -96,7 +135,7 @@ const SideMenu = ({ isOpen, setSideMenuOpen }) => {
           src={
             // sessionId && userInfos.avatar.tmdb.avatar_path
             //   ? `https://image.tmdb.org/t/p/w500${userInfos.avatar.tmdb.avatar_path}`
-            //   : "/images/no-profile.png"
+            //   : "./images/no-profile.png"
             "/images/no-profile.png"
           }
           alt={

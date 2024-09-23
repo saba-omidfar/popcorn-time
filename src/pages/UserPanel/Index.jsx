@@ -39,10 +39,10 @@ export default function Index() {
               <img
                 className="user_dashbord_image"
                 src={
-                  "/images/no-profile.png"
+                  "./images/no-profile.png"
                   // sessionId && userInfos.avatar.tmdb.avatar_path
                   //   ? `https://image.tmdb.org/t/p/w500${userInfos.avatar.tmdb.avatar_path}`
-                  //   : "/images/no-profile.png"
+                  //   : "./images/no-profile.png"
                 }
                 alt={
                   sessionId

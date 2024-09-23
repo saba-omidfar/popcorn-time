@@ -166,9 +166,12 @@ function HomePage() {
 
               <div className="d-flex">
                 {Array(
-                  5 -
-                    Math.floor(activeMovie.vote_average / 2) -
-                    (activeMovie.vote_average % 2 >= 1 ? 1 : 0)
+                  Math.max(
+                    5 -
+                      Math.floor(activeMovie.vote_average / 2) -
+                      (activeMovie.vote_average % 2 >= 1 ? 1 : 0),
+                    0
+                  )
                 )
                   .fill(0)
                   .map((_, index) => (
@@ -180,7 +183,7 @@ function HomePage() {
                 {(activeMovie.vote_average % 2 >= 1 ? 1 : 0) === 1 && (
                   <MdOutlineStarHalf style={{ color: "orange" }} />
                 )}
-                {Array(Math.floor(activeMovie.vote_average / 2))
+                {Array(Math.max(Math.floor(activeMovie.vote_average / 2), 0))
                   .fill(0)
                   .map((_, index) => (
                     <MdOutlineStarPurple500

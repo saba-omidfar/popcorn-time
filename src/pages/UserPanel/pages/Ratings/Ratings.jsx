@@ -1,9 +1,8 @@
-import { act, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import "nprogress/nprogress.css";
 import NProgress from "nprogress";
-import Swal from "sweetalert2";
 
 import "./Ratings.css";
 
@@ -17,16 +16,15 @@ import {
 } from "../../../../Components/Toast/Toast";
 
 import { useSession } from "../../../../Contexts/sessionContext";
+import { useGuestSession } from "../../../../Contexts/guestSessionContext";
 
 import { IoIosMenu } from "react-icons/io";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import { GoTrash } from "react-icons/go";
-import { CiViewList } from "react-icons/ci";
-import { useGuestSession } from "../../../../Contexts/guestSessionContext";
 
 export default function Ratings() {
+
   const { accountId, sessionId, apiReadAccessToken } = useSession();
-  const { guestSessionId, isGuest } = useGuestSession();
+  const { guestSessionId } = useGuestSession();
 
   const [isLoading, setIsLoading] = useState(true);
   const [showRatingModal, setShowRatingModal] = useState(false);
@@ -109,16 +107,12 @@ export default function Ratings() {
       );
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data.success === false) {
         setRatedMovies([]);
         setTotalPages("");
         return;
       }
+
+      const data = await response.json();
 
       if (data.results) {
         setRatedMovies(data.results);
@@ -209,7 +203,6 @@ export default function Ratings() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
 
       if (data.success === false) {
         setRatedTvs([]);
@@ -243,13 +236,16 @@ export default function Ratings() {
       );
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        setRatedTvs([]);
+        setTotalPages("");
+        return;
       }
       const data = await response.json();
 
       if (data.success === false) {
         setRatedTvs([]);
         setTotalPages("");
+        return;
       }
 
       if (data.results) {
@@ -330,7 +326,7 @@ export default function Ratings() {
         </div>
         <div className="rated-media-list-wrapper">
           {activeItem === "movie" ? (
-            ratedMovies.length ? (
+            !isLoading && ratedMovies.length ? (
               ratedMovies.map((movie) => (
                 <CardMovie
                   key={movie.id}
@@ -349,7 +345,7 @@ export default function Ratings() {
               </div>
             )
           ) : activeItem === "tv" ? (
-            ratedTvs.length ? (
+            !isLoading && ratedTvs.length ? (
               ratedTvs.map((tv) => (
                 <CardMovie
                   key={tv.id}

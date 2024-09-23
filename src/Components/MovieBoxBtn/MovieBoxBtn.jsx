@@ -52,12 +52,17 @@ function MovieBoxBtn(props) {
               }}
             >
               <IoIosTrash />
-              حذف
+              <span className="me-1">حذف</span>
             </div>
           ) : (
-            <div className="movie-remove__btn" style={{ width: "70%" }} onClick={handleDelete}>
+            <div
+              className="movie-remove__btn"
+              style={{ width: "70%" }}
+              onClick={handleDelete}
+            >
               <IoIosTrash />
-              حذف
+
+              <span className="me-1">حذف</span>
             </div>
           )}
         </div>
@@ -103,7 +108,8 @@ function MovieBoxBtn(props) {
               onClick={handleDelete}
             >
               <IoIosTrash />
-              حذف
+
+              <span className="me-1">حذف</span>
             </div>
           </div>
         </div>

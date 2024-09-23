@@ -6,7 +6,7 @@ import NProgress from "nprogress";
 const GuestSessionContext = createContext();
 
 export const GuestSessionProvider = ({ children }) => {
-  const [apiKey, setApiKey] = useState("7ae7b107732960a05092f90c2334404d");
+  const [apiKey, setApiKey] = useState("edb5e6a453406f212678f16338a602df");
   const [guestSessionId, setGuestSessionId] = useState(() => {
     return localStorage.getItem("guestSessionId") || null;
   });
@@ -53,7 +53,7 @@ export const GuestSessionProvider = ({ children }) => {
           setGuestSessionId(data.guest_session_id);
           localStorage.setItem("guestSessionId", data.guest_session_id);
           showToastSuccess("بصورت مهمان وارد سایت شدید");
-          window.location.href = `http://localhost:5174`;
+          window.location.href = `http://localhost:5173`;
         } else {
           console.error("Guest Session creation failed:", data);
         }

@@ -6,7 +6,7 @@ import NProgress from "nprogress";
 
 const SessionContext = createContext();
 const apiReadAccessToken =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YWU3YjEwNzczMjk2MGEwNTA5MmY5MGMyMzM0NDA0ZCIsIm5iZiI6MTcyNjQ1NzE1Mi4zNTMyODcsInN1YiI6IjY2YmYwODdkOWNjZjFjZGVmZTUwZWFlMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ziUR1DQ_KUGywOclXSxKw1qFj9SNkZrtwPRCIV3mqMA";
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZGI1ZTZhNDUzNDA2ZjIxMjY3OGYxNjMzOGE2MDJkZiIsIm5iZiI6MTcyNzA4NDkwNS4xNzMxNzMsInN1YiI6IjY2YmYwODdkOWNjZjFjZGVmZTUwZWFlMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XEYf3IbSkqZVY4n6UmBN2bAs4e3bX0ECxqJ3acOhIVo";
 
 export const SessionProvider = ({ children }) => {
   const [sessionId, setSessionId] = useState(() => {
@@ -14,7 +14,7 @@ export const SessionProvider = ({ children }) => {
   });
   const [userInfos, setUserInfos] = useState({});
   const [accountId, setAccountId] = useState(null);
-  const [apiKey, setApiKey] = useState("7ae7b107732960a05092f90c2334404d");
+  const [apiKey, setApiKey] = useState("edb5e6a453406f212678f16338a602df");
 
   const createNewRequestToken = () => {
     NProgress.start();
@@ -28,7 +28,7 @@ export const SessionProvider = ({ children }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.request_token) {
-          window.location.href = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=http://localhost:5174/`;
+          window.location.href = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=http://localhost:5173/`;
         } else {
           console.error("Token creation failed:", data);
         }
@@ -56,6 +56,8 @@ export const SessionProvider = ({ children }) => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log("data:", data);
+        
         if (data.session_id) {
           setSessionId(data.session_id);
           localStorage.setItem("sessionId", data.session_id);
