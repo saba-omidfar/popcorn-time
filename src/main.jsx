@@ -12,11 +12,11 @@ Modal.setAppElement("#root");
 
 import "./index.css";
 
-import "./assets/styles/reset.css";
-import "./assets/styles/fonts.css";
-import "./assets/styles/variables.css";
-import "./assets/styles/defaults.css";
-import "./assets/styles/helpers.css";
+import "/assets/styles/reset.css";
+import "/assets/styles/fonts.css";
+import "/assets/styles/variables.css";
+import "/assets/styles/defaults.css";
+import "/assets/styles/helpers.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
