@@ -130,14 +130,12 @@ function HomePage() {
           <IoIosMenu />
         </div>
         <div className="movie-intro__wrap">
-          {isLoaded && activeMovie ? (
+          {activeMovie && (
             <img
               src={`https://media.themoviedb.org/t/p/w300${activeMovie.poster_path}`}
               className="movie__image"
               alt={`${activeMovie.title || activeMovie.name} Image`}
             />
-          ) : (
-            <span className="loading-icon"></span>
           )}
         </div>
 

@@ -10,7 +10,6 @@ body {
   font-size: 1.6rem;
   font-family: var(--primary-font);
   direction: rtl;
-  min-width: 370px;
   overflow: hidden;
 }
 

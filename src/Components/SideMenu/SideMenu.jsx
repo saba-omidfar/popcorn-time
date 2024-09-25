@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./SideMenu.css";
 
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
 
 import { useSession } from "../../Contexts/sessionContext";
@@ -22,6 +22,7 @@ const SideMenu = ({ isOpen, setSideMenuOpen }) => {
   const [seriesgenres, setSerieGenres] = useState([]);
   const [isMovieGenreOpen, setIsMovieGenreOpen] = useState(false);
   const [isSeriesGenreOpen, setIsSeriesGenreOpen] = useState(false);
+  const [isMediaListOpen, setIsMediaListOpen] = useState(false);
 
   const getAllSeriesGenres = async () => {
     NProgress.start();
@@ -43,7 +44,6 @@ const SideMenu = ({ isOpen, setSideMenuOpen }) => {
 
       const data = await response.json();
       setSerieGenres(data.genres);
-      
     } catch (error) {
       showToastError("خطای سیستم!");
       console.error("Error fetching genre list tv:", error);
@@ -72,7 +72,6 @@ const SideMenu = ({ isOpen, setSideMenuOpen }) => {
 
       const data = await response.json();
       setMovieGenres(data.genres);
-      
     } catch (error) {
       showToastError("خطای سیستم!");
       console.error("Error fetching genre list tv:", error);
@@ -80,7 +79,6 @@ const SideMenu = ({ isOpen, setSideMenuOpen }) => {
       NProgress.done();
     }
   };
-
 
   useEffect(() => {
     getAllSeriesGenres();
@@ -101,28 +99,23 @@ const SideMenu = ({ isOpen, setSideMenuOpen }) => {
     };
   }, []);
 
-  const toggleMovieGenre = () => {
+  const toggleMovieGenre = (event) => {
+    event.preventDefault();
     setIsMovieGenreOpen((prev) => !prev);
   };
 
-  const toggleSeriesGenre = () => {
+  const toggleSeriesGenre = (event) => {
+    event.preventDefault();
     setIsSeriesGenreOpen((prev) => !prev);
+  };
+
+  const toggleMediaList = (event) => {
+    event.preventDefault();
+    setIsMediaListOpen((prev) => !prev);
   };
 
   return (
     <div className={`side-menu ${isOpen ? "open" : ""}`} ref={sidebarRef}>
-      {/* <div className="searchbar">
-        <input
-          type="text"
-          value={searchValue}
-          onChange={(event) => setSearchValue(event.target.value)}
-          className="searchbar__input"
-          placeholder="جستجوی فیلم، سریال و ..."
-        />
-        <CustomLink to={`/search/${searchValue}`}>
-          <IoSearch className="search-icon" />
-        </CustomLink>
-      </div> */}
       <div className="d-flex w-100 p-4 justify-content-end">
         <IoCloseOutline
           className="side-menu__close-icon"
@@ -147,101 +140,158 @@ const SideMenu = ({ isOpen, setSideMenuOpen }) => {
           }
         />
       </div>
-      {sessionId ? (
-        <div className="username">{userInfos.username}</div>
-      ) : guestSessionId ? (
-        <div className="username">Guest User</div>
-      ) : (
-        <Link to="/sign-in" className="sign-in__link">
-          ورود به حساب کاربری
-        </Link>
-      )}
+      <div className="username">
+        {sessionId ? (
+          <div>{userInfos.username}</div>
+        ) : guestSessionId ? (
+          <div>Guest User</div>
+        ) : (
+          <Link to="/sign-in" className="sign-in__link">
+            ورود به حساب کاربری
+          </Link>
+        )}
+      </div>
       <ul className="side-menu__wrapper">
-        <Link to="/" className="side-menu__category-item">
-          <span className="section-title">خانه</span>
-        </Link>
-        <Link to="/categories" className="side-menu__category-item">
-          <span className="section-title">دسته‌بندی</span>
-        </Link>
-        <div className="side-menu__category-item">
+        <li className="side-menu__category-item">
+          <Link to="/">
+            <span className="section-title">خانه</span>
+          </Link>
+        </li>
+        <li className="side-menu__category-item">
+          <Link to="/categories">
+            <span className="section-title">دسته‌بندی</span>
+          </Link>
+        </li>
+
+        <li
+          className={`side-menu__category-item ${
+            isMovieGenreOpen ? "side-menu__category-item-active" : ""
+          }`}
+        >
           <div
             className="w-100 d-flex align-items-center justify-content-between"
             onClick={toggleMovieGenre}
           >
             <span className="section-title">ژانر فیلم</span>
-            <IoIosArrowDown />
+            {!isMovieGenreOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
           </div>
           <span
             className={`line ${isMovieGenreOpen ? "line_active" : ""}`}
           ></span>
-          {isMovieGenreOpen && (
-            <ul className="side-menu__genre-links">
-              {moviesgenres.map((genre) => (
+
+          <ul
+            className={`side-menu__genre-links ${
+              isMovieGenreOpen ? "active" : ""
+            }`}
+          >
+            {moviesgenres.map((genre) => (
+              <li key={genre.id}>
                 <Link
                   className="side-menu__genre-item"
                   to={`/movie-genre/${genre.name.toLowerCase()}`}
-                  key={genre.id}
                   onClick={() => setSideMenuOpen(false)}
                 >
                   {genre.name}
                 </Link>
-              ))}
-            </ul>
-          )}
-        </div>
-        <div className="side-menu__category-item">
+              </li>
+            ))}
+          </ul>
+        </li>
+        <li
+          className={`side-menu__category-item ${
+            isSeriesGenreOpen ? "side-menu__category-item-active" : ""
+          }`}
+        >
           <div
             className="w-100 d-flex align-items-center justify-content-between"
             onClick={toggleSeriesGenre}
           >
             <span className="section-title">ژانر سریال</span>
-            <IoIosArrowDown />
+            {!isSeriesGenreOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
           </div>
 
           <span
             className={`line ${isSeriesGenreOpen ? "line_active" : ""}`}
           ></span>
-          {isSeriesGenreOpen && (
-            <ul className="side-menu__genres-wrapper">
-              {seriesgenres.map((genre) => (
-                <Link
-                  className="side-menu__genre-item"
-                  to={`/series-genre/${genre.name.toLowerCase()}`}
-                  key={genre.id}
-                  onClick={() => setSideMenuOpen(false)}
-                >
-                  {genre.name}
-                </Link>
-              ))}
-            </ul>
-          )}
-        </div>
-        <Link to="/movies/upcoming" className="side-menu__category-item">
-          <span className="section-title">جدیدترین فیلم‌ها</span>
-        </Link>
-        <Link to="/tv/on-the-air" className="side-menu__category-item">
-          <span className="section-title">جدیدترین سریال‌ها</span>
-        </Link>
-        <Link to="/movies/top-rated" className="side-menu__category-item">
-          <span className="section-title">پرفروش‌ترین فیلم‌ها</span>
-        </Link>
-        <Link to="/series/top-rated" className="side-menu__category-item">
-          <span className="section-title">پرفروش‌ترین سریال‌ها</span>
-        </Link>
-        <Link to="/search" className="side-menu__category-item">
-          <span className="section-title">جستجو فیلم و سریال</span>
-        </Link>
-        <Link to="/contactus" className="side-menu__category-item">
-          <span className="section-title">تماس با ما</span>
-        </Link>
-        {sessionId && (
-          <Link to="/my-account" className="side-menu__category-item">
-            <span className="section-title">ورود به پنل</span>
+          <ul
+            className={`side-menu__genre-links ${
+              isSeriesGenreOpen ? "active" : ""
+            }`}
+          >
+            {seriesgenres.map((genre) => (
+              <Link
+                className="side-menu__genre-item"
+                to={`/series-genre/${genre.name.toLowerCase()}`}
+                key={genre.id}
+                onClick={() => setSideMenuOpen(false)}
+              >
+                {genre.name}
+              </Link>
+            ))}
+          </ul>
+        </li>
+
+        <li
+          className={`side-menu__category-item ${
+            isMediaListOpen ? "side-menu__category-item-active" : ""
+          }`}
+        >
+          <div
+            className="w-100 d-flex align-items-center justify-content-between"
+            onClick={toggleMediaList}
+          >
+            <span className="section-title">لیست‌ها</span>
+            {!isMediaListOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
+          </div>
+
+          <span
+            className={`line ${isMediaListOpen ? "line_active" : ""}`}
+          ></span>
+          <ul
+            className={`side-menu__genre-links ${
+              isMediaListOpen ? "active" : ""
+            }`}
+          >
+            <li className="side-menu__category-item">
+              <Link to="/movies/upcoming" className="side-menu__list-item">
+                جدیدترین فیلم‌ها
+              </Link>
+            </li>
+            <li className="side-menu__category-item">
+              <Link to="/tv/on-the-air" className="side-menu__list-item">
+                جدیدترین سریال‌ها
+              </Link>
+            </li>
+            <li className="side-menu__category-item">
+              <Link to="/movies/top-rated" className="side-menu__list-item">
+                پرفروش‌ترین فیلم‌ها
+              </Link>
+            </li>
+            <li className="side-menu__category-item">
+              <Link to="/series/top-rated" className="side-menu__list-item">
+                پرفروش‌ترین سریال‌ها
+              </Link>
+            </li>
+          </ul>
+        </li>
+        <li className="side-menu__category-item">
+          <Link to="/search">
+            <span className="section-title">جستجو فیلم و سریال</span>
           </Link>
+        </li>
+        <li className="side-menu__category-item">
+          <Link to="/contactus">
+            <span className="section-title">تماس با ما</span>
+          </Link>
+        </li>
+        {sessionId && (
+          <li className="side-menu__category-item">
+            <Link to="/my-account">
+              <span className="section-title">ورود به پنل</span>
+            </Link>
+          </li>
         )}
-      </ul>
-      {sessionId ? (
-        <div className="side-menu__footer">
+        {sessionId ? (
           <Link
             to="/"
             className="side-menu__category-item"
@@ -252,9 +302,7 @@ const SideMenu = ({ isOpen, setSideMenuOpen }) => {
           >
             <span className="section-title">خروج از حساب کاربری</span>
           </Link>
-        </div>
-      ) : guestSessionId ? (
-        <div className="side-menu__footer">
+        ) : guestSessionId ? (
           <Link
             to="/"
             className="side-menu__category-item"
@@ -265,10 +313,10 @@ const SideMenu = ({ isOpen, setSideMenuOpen }) => {
           >
             <span className="section-title">خروج از حساب کاربری مهمان</span>
           </Link>
-        </div>
-      ) : (
-        ""
-      )}
+        ) : (
+          ""
+        )}
+      </ul>
     </div>
   );
 };

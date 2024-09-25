@@ -396,132 +396,132 @@ function SeriesPlayback() {
     }
   };
 
-  const handleAddOrRemoveFromList = async () => {
-    if (isGuest()) {
-      showToastError("حساب مهمان قابلیت افزودن یا حذف از لیست را ندارد");
-      return;
-    }
+  // const handleAddOrRemoveFromList = async () => {
+  //   if (isGuest()) {
+  //     showToastError("حساب مهمان قابلیت افزودن یا حذف از لیست را ندارد");
+  //     return;
+  //   }
 
-    if (!sessionId) {
-      showToastError("برای افزودن به لیست وارد شوید");
-      return;
-    } else {
-      const allLists = await getLists();
+  //   if (!sessionId) {
+  //     showToastError("برای افزودن به لیست وارد شوید");
+  //     return;
+  //   } else {
+  //     const allLists = await getLists();
 
-      if (!allLists || allLists.length === 0) {
-        Swal.fire({
-          icon: "error",
-          title: "شما هنوز هیچ لیستی نساخته‌اید.",
-          text: " آیا می‌خواهید یک لیست جدید بسازید؟",
-          showCancelButton: true,
-          confirmButtonText: "ساخت لیست جدید",
-          cancelButtonText: "خیر",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "/my-account/lists";
-          }
-        });
-        return;
-      }
+  //     if (!allLists || allLists.length === 0) {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "شما هنوز هیچ لیستی نساخته‌اید.",
+  //         text: " آیا می‌خواهید یک لیست جدید بسازید؟",
+  //         showCancelButton: true,
+  //         confirmButtonText: "ساخت لیست جدید",
+  //         cancelButtonText: "خیر",
+  //       }).then((result) => {
+  //         if (result.isConfirmed) {
+  //           window.location.href = "/my-account/lists";
+  //         }
+  //       });
+  //       return;
+  //     }
 
-      const inputOptions = allLists.reduce((acc, list) => {
-        acc[list.id] = list.name;
-        return acc;
-      }, {});
+  //     const inputOptions = allLists.reduce((acc, list) => {
+  //       acc[list.id] = list.name;
+  //       return acc;
+  //     }, {});
 
-      const { value: selectedListId } = await Swal.fire({
-        title: "لیست مورد نظر خود را انتخاب کنید",
-        input: "select",
-        inputOptions,
-        inputPlaceholder: "همه‌ی لیست‌ها",
-        showCancelButton: true,
-        inputValidator: (value) => {
-          if (!value) {
-            return "لطفا یک لیست را انتخاب کنید!";
-          }
-        },
-      });
+  //     const { value: selectedListId } = await Swal.fire({
+  //       title: "لیست مورد نظر خود را انتخاب کنید",
+  //       input: "select",
+  //       inputOptions,
+  //       inputPlaceholder: "همه‌ی لیست‌ها",
+  //       showCancelButton: true,
+  //       inputValidator: (value) => {
+  //         if (!value) {
+  //           return "لطفا یک لیست را انتخاب کنید!";
+  //         }
+  //       },
+  //     });
 
-      if (selectedListId) {
-        const movieId = seriesDetails.id;
-        const isMovieInList = await checkMovieInList(movieId, selectedListId);
+  //     if (selectedListId) {
+  //       const movieId = seriesDetails.id;
+  //       const isMovieInList = await checkMovieInList(movieId, selectedListId);
 
-        if (isMovieInList) {
-          Swal.fire({
-            title: "این سریال در لیست انتخابی شما وجود دارد",
-            text: "آیا می‌خواهید آن را از لیست حذف کنید؟",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "بله",
-            cancelButtonText: "خیر",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              removeMovieFromList(selectedListId, movieId);
-            }
-          });
-        } else {
-          addMovieToList(selectedListId, movieId);
-        }
-      }
-    }
-  };
+  //       if (isMovieInList) {
+  //         Swal.fire({
+  //           title: "این سریال در لیست انتخابی شما وجود دارد",
+  //           text: "آیا می‌خواهید آن را از لیست حذف کنید؟",
+  //           icon: "warning",
+  //           showCancelButton: true,
+  //           confirmButtonText: "بله",
+  //           cancelButtonText: "خیر",
+  //         }).then((result) => {
+  //           if (result.isConfirmed) {
+  //             removeMovieFromList(selectedListId, movieId);
+  //           }
+  //         });
+  //       } else {
+  //         addMovieToList(selectedListId, movieId);
+  //       }
+  //     }
+  //   }
+  // };
 
-  const addMovieToList = async (listId, movieId) => {
-    if (!sessionId || !accountId) {
-      showToastError("برای افزودن به لیست باید وارد شوید");
-      return;
-    }
-    try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/list/${listId}/add_item`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiReadAccessToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            media_id: movieId,
-          }),
-        }
-      );
+  // const addMovieToList = async (listId, movieId) => {
+  //   if (!sessionId || !accountId) {
+  //     showToastError("برای افزودن به لیست باید وارد شوید");
+  //     return;
+  //   }
+  //   try {
+  //     const response = await fetch(
+  //       `https://api.themoviedb.org/3/list/${listId}/add_item`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           Authorization: `Bearer ${apiReadAccessToken}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           media_id: movieId,
+  //         }),
+  //       }
+  //     );
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
 
-      showToastSuccess("سریال به لیست اضافه شد");
-    } catch (error) {
-      showToastError("خطای سیستم!");
-      console.error("Error adding movie to list:", error);
-    }
-  };
+  //     showToastSuccess("سریال به لیست اضافه شد");
+  //   } catch (error) {
+  //     showToastError("خطای سیستم!");
+  //     console.error("Error adding movie to list:", error);
+  //   }
+  // };
 
-  const removeMovieFromList = async (listId, movieId) => {
-    try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/list/${listId}/remove_item`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiReadAccessToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            media_id: movieId,
-          }),
-        }
-      );
+  // const removeMovieFromList = async (listId, movieId) => {
+  //   try {
+  //     const response = await fetch(
+  //       `https://api.themoviedb.org/3/list/${listId}/remove_item`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           Authorization: `Bearer ${apiReadAccessToken}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           media_id: movieId,
+  //         }),
+  //       }
+  //     );
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      showToastSuccess("سریال از لیست حذف شد");
-    } catch (error) {
-      showToastError("خطای سیستم!");
-      console.error("Error removing movie from list:", error);
-    }
-  };
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+  //     showToastSuccess("سریال از لیست حذف شد");
+  //   } catch (error) {
+  //     showToastError("خطای سیستم!");
+  //     console.error("Error removing movie from list:", error);
+  //   }
+  // };
 
   //Inside your component
   useEffect(() => {
@@ -677,14 +677,14 @@ function SeriesPlayback() {
           </div>
         </Tooltip>
 
-        <Tooltip placement="left-start" title="افزودن به لیست">
+        {/* <Tooltip placement="left-start" title="افزودن به لیست">
           <div
             className="add-to-list__icon mt-2 mb-2"
             onClick={handleAddOrRemoveFromList}
           >
             <IoIosList />
           </div>
-        </Tooltip>
+        </Tooltip> */}
 
         <Tooltip
           placement="left-start"
