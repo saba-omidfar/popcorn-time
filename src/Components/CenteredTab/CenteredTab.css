@@ -35,3 +35,7 @@
   font-family: "IRANYekan" !important;
   color: var(--gray-color) !important;
 }
+
+.MuiTabs-indicator .css-314rep {
+  background-color: var(--primary-color) !important;
+}
