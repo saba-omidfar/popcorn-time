@@ -723,7 +723,7 @@ function PlaybackPage() {
                   <div className="info flex-grow-1 align-items-start">
                     <div className="info-title">ستارگان</div>
                     <div className="info-content">
-                      {movieCast.slice(0, 4).map((star) => (
+                      {movieCast.slice(0, 3).map((star) => (
                         <span key={star.id} className="movie_actor">
                           {star.name}
                         </span>
