@@ -20,7 +20,7 @@
 }
 
 .css-19wsa2m-MuiButtonBase-root-MuiTab-root.Mui-selected {
-  color: var(--primary-color);
+  color: var(--gray-color) !important;
 }
 
 .css-ikdnna-MuiTabs-flexContainer {
@@ -30,3 +30,8 @@
 .MuiTouchRipple-root .MuiTouchRipple-ripple {
   background-color: rgba(157, 26, 21, 0.3);
 } */
+
+.css-9gnw14 {
+  font-family: "IRANYekan" !important;
+  color: var(--gray-color) !important;
+}

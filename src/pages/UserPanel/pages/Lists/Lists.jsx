@@ -342,15 +342,15 @@ export default function Lists() {
                       </div>
                       <div className="lists-bottom-line">
                         <div className="lists-items__footer-right-side">
-                          <Link
+                          {/* <Link
                             to={`/my-account/lists/editInfo/${list.id}`}
                             className="ms-3"
                           >
                             <CiViewList className="edit-icon" />
                             ویرایش لیست
-                          </Link>
+                          </Link> */}
                           <div
-                            className="lists-items__footer-right-side ms-3"
+                            className="lists-items__footer-right-side"
                           >
                             <Link to={`/my-account/lists/editItems/${list.id}`}>
                               <GoTrash className="remove-link-icon" />
@@ -367,7 +367,7 @@ export default function Lists() {
                             حذف لیست
                           </Link>
                           <div
-                            className="lists-items__footer-right-side ms-3"
+                            className="lists-items__footer-right-side me-3"
                             onClick={() => clearAllMoviesList(list.id)}
                           >
                             <GoTrash className="remove-link-icon" />

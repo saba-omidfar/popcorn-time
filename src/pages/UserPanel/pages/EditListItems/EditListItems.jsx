@@ -300,12 +300,12 @@ export default function EditListInfo() {
         <div className="side-menu__icon" onClick={toggleSideMenu}>
           <IoIosMenu />
         </div>
-        <div className="lists-results__header">
+        {/* <div className="lists-results__header">
           <span className="lists-results__title">ویرایش لیست</span>
           <Link to="/my-account/lists">
             <IoArrowBackCircleOutline className="lists-back__icon" />
           </Link>
-        </div>
+        </div> */}
         <div className="search-screen__searchbar mt-3">
           <input
             type="text"
