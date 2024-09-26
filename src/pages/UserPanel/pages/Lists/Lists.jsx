@@ -232,7 +232,7 @@ export default function Lists() {
           </Link>
         </div>
         <div className="d-flex mt-5">
-          <p>از فیلم‌ها یا سریال‌های موردعلاقه خود لیست بسازید</p>
+          <p className="create-list-title">از فیلم‌ها یا سریال‌های موردعلاقه خود لیست بسازید</p>
         </div>
         <div className="d-flex align-items-center justify-content-center flex-wrap w-100 mt-5">
           <div className="create_list">
