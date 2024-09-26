@@ -34,8 +34,13 @@
 .css-9gnw14 {
   font-family: "IRANYekan" !important;
   color: var(--gray-color) !important;
+  font-size: 13px !important;
 }
 
-.MuiTabs-indicator .css-314rep {
+.MuiTabs-indicator {
+  background-color: var(--primary-color) !important;
+}
+
+.css-314rep {
   background-color: var(--primary-color) !important;
 }
