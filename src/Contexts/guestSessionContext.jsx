@@ -53,7 +53,7 @@ export const GuestSessionProvider = ({ children }) => {
           setGuestSessionId(data.guest_session_id);
           localStorage.setItem("guestSessionId", data.guest_session_id);
           showToastSuccess("بصورت مهمان وارد سایت شدید");
-          window.location.href = `http://localhost:5173`;
+          window.location.href = `https://popcorntime-mu.vercel.app/`;
         } else {
           console.error("Guest Session creation failed:", data);
         }
