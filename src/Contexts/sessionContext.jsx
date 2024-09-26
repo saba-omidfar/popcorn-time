@@ -28,7 +28,7 @@ export const SessionProvider = ({ children }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.request_token) {
-          window.location.href = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=https://popcorn-time-blush.vercel.app/`;
+          window.location.href = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=http://localhost:5173/`;
         } else {
           console.error("Token creation failed:", data);
         }
@@ -57,7 +57,7 @@ export const SessionProvider = ({ children }) => {
       .then((res) => res.json())
       .then((data) => {
         console.log("data:", data);
-
+        
         if (data.session_id) {
           setSessionId(data.session_id);
           localStorage.setItem("sessionId", data.session_id);
