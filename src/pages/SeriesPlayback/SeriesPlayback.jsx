@@ -645,7 +645,7 @@ function SeriesPlayback() {
           }
         >
           <div
-            className="add-to-favorite__icon mt-2 mb-2"
+            className="add-to-favorite__icon mt-3 mb-3"
             onClick={() => toggleFavorite(seriesDetails.id, "tv")}
           >
             {addToFavoriteLoading ? (
@@ -664,7 +664,7 @@ function SeriesPlayback() {
           }
         >
           <div
-            className="add-to-watchlist__icon mt-2 mb-2"
+            className="add-to-watchlist__icon mt-3 mb-3"
             onClick={() => toggleWatchlist(seriesDetails.id, "tv")}
           >
             {addToWathlistLoading ? (
@@ -691,7 +691,7 @@ function SeriesPlayback() {
           title={status.rated.value ? "تغییر امتیاز" : "افزودن امتیاز"}
         >
           <div
-            className="add-rate__icon mt-2 mb-2"
+            className="add-rate__icon mt-3 mb-3"
             onClick={() => addRateMedia()}
           >
             {status.rated.value ? <MdStarRate /> : <MdStarOutline />}

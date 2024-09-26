@@ -590,7 +590,7 @@ function PlaybackPage() {
           }
         >
           <div
-            className="add-to-favorite__icon mt-2 mb-2"
+            className="add-to-favorite__icon mt-3 mb-3"
             onClick={() => toggleFavorite(movieDetails.id, "movie")}
           >
             {addToFavoriteLoading ? (
@@ -609,7 +609,7 @@ function PlaybackPage() {
           }
         >
           <div
-            className="add-to-watchlist__icon mt-2 mb-2"
+            className="add-to-watchlist__icon mt-3 mb-3"
             onClick={() => toggleWatchlist(movieDetails.id, "movie")}
           >
             {addToWathlistLoading ? (
@@ -623,7 +623,7 @@ function PlaybackPage() {
         </Tooltip>
         <Tooltip placement="left-start" title="افزودن به لیست">
           <div
-            className="add-to-list__icon mt-2 mb-2"
+            className="add-to-list__icon mt-3 mb-3"
             onClick={handleAddOrRemoveFromList}
           >
             <IoIosList />
@@ -634,7 +634,7 @@ function PlaybackPage() {
           title={status.rated ? "تغییر امتیاز" : "افزودن امتیاز"}
         >
           <div
-            className="add-rate__icon mt-2 mb-2"
+            className="add-rate__icon mt-3 mb-3"
             onClick={() => addRateMedia()}
           >
             {status.rated ? <MdStarRate /> : <MdStarOutline />}

@@ -21,6 +21,7 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { GoTrash } from "react-icons/go";
 import { AiOutlineEdit } from "react-icons/ai";
 import { CiViewList } from "react-icons/ci";
+import { MdEdit } from "react-icons/md";
 
 export default function Lists() {
   const navigate = useNavigate();
@@ -341,22 +342,21 @@ export default function Lists() {
                         </div>
                       </div>
                       <div className="lists-bottom-line">
-                        <div className="lists-items__footer-right-side">
-                          {/* <Link
+                        {/* <div className="lists-items__footer-right-side">
+                          <Link
                             to={`/my-account/lists/editInfo/${list.id}`}
                             className="ms-3"
                           >
                             <CiViewList className="edit-icon" />
                             ویرایش لیست
-                          </Link> */}
-                          <div
-                            className="lists-items__footer-right-side"
-                          >
-                            <Link to={`/my-account/lists/editItems/${list.id}`}>
-                              <GoTrash className="remove-link-icon" />
-                              ویرایش آیتم‌ها
-                            </Link>
-                          </div>
+                          </Link>
+                          
+                        </div> */}
+                        <div className="lists-items__footer-right-side">
+                          <Link to={`/my-account/lists/editItems/${list.id}`}>
+                            <MdEdit className="remove-link-icon" />
+                            ویرایش
+                          </Link>
                         </div>
                         <div
                           className="lists-items__footer-left-side"
@@ -366,13 +366,13 @@ export default function Lists() {
                             <GoTrash className="remove-link-icon" />
                             حذف لیست
                           </Link>
-                          <div
-                            className="lists-items__footer-right-side me-3"
-                            onClick={() => clearAllMoviesList(list.id)}
-                          >
-                            <GoTrash className="remove-link-icon" />
-                            حذف همه‌ی آیتم‌ها
-                          </div>
+                        </div>
+                        <div
+                          className="lists-items__footer-right-side me-3"
+                          onClick={() => clearAllMoviesList(list.id)}
+                        >
+                          <GoTrash className="remove-link-icon" />
+                          حذف همه‌ی آیتم‌ها
                         </div>
                       </div>
                     </div>
