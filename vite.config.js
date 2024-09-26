@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/popcorn-time/", // Adjust this to match your GitHub Pages subpath
   build: {
     outDir: "dist",
     rollupOptions: {
