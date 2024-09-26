@@ -109,7 +109,6 @@ export default function Lists() {
 
       const data = await response.json();
       setAllList(data.results);
-      console.log("data:", data);
     } catch (error) {
       console.error("Error creating list:", error);
     } finally {
@@ -232,7 +231,9 @@ export default function Lists() {
           </Link>
         </div>
         <div className="d-flex mt-5">
-          <p className="create-list-title">از فیلم‌ها یا سریال‌های موردعلاقه خود لیست بسازید</p>
+          <p className="create-list-title">
+            از فیلم‌ها یا سریال‌های موردعلاقه خود لیست بسازید
+          </p>
         </div>
         <div className="d-flex align-items-center justify-content-center flex-wrap w-100 mt-5">
           <div className="create_list">

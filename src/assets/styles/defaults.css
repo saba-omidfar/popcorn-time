@@ -39,8 +39,8 @@ i {
 /* Start Scroll-Y Styles */
 
 ::-webkit-scrollbar {
-  width: 4px;
-  margin-left: 5px;
+  width: 3px;
+  margin: 0 3px;
 }
 
 ::-webkit-scrollbar-track {
