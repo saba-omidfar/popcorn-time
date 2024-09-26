@@ -5,7 +5,7 @@ import ReactDOM from "react-dom/client";
 import { SessionProvider } from "./Contexts/sessionContext";
 import { GuestSessionProvider } from "./Contexts/guestSessionContext";
 
-import App from "./App.jsx";
+import App from "./App";
 import Modal from "react-modal";
 
 Modal.setAppElement("#root");
