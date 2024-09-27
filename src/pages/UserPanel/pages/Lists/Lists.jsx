@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "nprogress/nprogress.css";
 import NProgress from "nprogress";
 import Swal from "sweetalert2";
+import { Alert } from "@mui/material";
 
 import "./Lists.css";
 
@@ -382,9 +383,9 @@ export default function Lists() {
               </div>
             ))
           ) : (
-            <div className="alert alert-danger">
+            <Alert className="text-error" variant="filled" severity="error">
               در حال حاضر هیچ لیستی ندارید.
-            </div>
+            </Alert>
           )}
         </div>
       </div>

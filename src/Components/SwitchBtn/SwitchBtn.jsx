@@ -1,5 +1,3 @@
-// src/Components/SwitchBtn/SwitchBtn.jsx
-
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 
@@ -7,12 +5,12 @@ const IOSSwitch = styled((props) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
   width: 144,
-  height: 28,
+  height: 29,
   padding: 0,
   "& .MuiSwitch-switchBase": {
     padding: 0,
-    margin: 1,
-    left: 1,
+    margin: 2,
+    left: 0,
     transitionDuration: "300ms",
     "&.Mui-checked": {
       transform: "translateX(69px)",
@@ -52,8 +50,8 @@ const SwitchBtn = ({ checked, onChange }) => {
       <span
         style={{
           position: "absolute",
-          left: 18,
-          top: 4,
+          left: 24,
+          top: 3,
           fontSize: 13,
           color: "#c4c4c4",
           zIndex: 1,
@@ -61,13 +59,13 @@ const SwitchBtn = ({ checked, onChange }) => {
         }}
         onClick={() => onChange({ target: { checked: false } })}
       >
-        Today
+        امروز
       </span>
       <span
         style={{
           position: "absolute",
-          right: 9,
-          top: 4,
+          right: 15,
+          top: 3,
           fontSize: 13,
           color: "#c4c4c4",
           zIndex: 1,
@@ -75,7 +73,7 @@ const SwitchBtn = ({ checked, onChange }) => {
         }}
         onClick={() => onChange({ target: { checked: true } })}
       >
-        This Week
+        این هفته
       </span>
     </div>
   );

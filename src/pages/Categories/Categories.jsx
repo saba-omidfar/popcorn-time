@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 
 import BottomBar from "../../Components/BottomBar/BottomBar";
 import SideMenu from "../../Components/SideMenu/SideMenu";
-import MovieBox from "../../Components/MovieBox/MovieBox";
+// import MovieBox from "../../Components/MovieBox/MovieBox";
+
+const MovieBox = React.lazy(() => import("../../Components/MovieBox/MovieBox"));
 
 import { IoIosMenu } from "react-icons/io";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
@@ -27,120 +29,71 @@ function Categories() {
   const [swiperNowPlayingtvsProgress, setSwiperNowPlayingtvsProgress] =
     useState(0);
 
-  const [isLoading, setIsLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const getAllTrendingMovies = () => {
-    setIsLoading(true);
-    setIsLoaded(false);
-    NProgress.start();
-    fetch(
-      `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=${apiKey}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${apiReadAccessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error(`Http error! status: ${res.status}`);
-        }
-      })
-      .then((data) => {
-        setAllMovies(data.results);
-      })
-      .catch((error) => {
-        console.error("Error fetching movies:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setIsLoaded(true);
-        NProgress.done();
-      });
-  };
-
-  const getAllTrendinSeries = () => {
-    setIsLoading(true);
-    setIsLoaded(false);
-    NProgress.start();
-
-    fetch(
-      `https://api.themoviedb.org/3/trending/tv/day?language=en-US&page=1&api_key=${apiKey}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${apiReadAccessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error(`Http error! status: ${res.status}`);
-        }
-      })
-      .then((data) => {
-        setAllSeries(data.results);
-      })
-      .catch((error) => {
-        console.error("Error fetching movies:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setIsLoaded(true);
-        NProgress.done();
-      });
-  };
-
-  const getAllTopRatedTvs = () => {
-    setIsLoading(true);
-    setIsLoaded(false);
-    NProgress.start();
-    fetch(
-      `https://api.themoviedb.org/3/tv/top_rated?api_key=${apiKey}&language=en-US`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${apiReadAccessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error(`Http error! status: ${res.status}`);
-        }
-      })
-      .then((data) => {
-        setAllTopRatedTvs(data.results);
-      })
-      .catch((error) => {
-        console.error("Error fetching movies:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setIsLoaded(true);
-        NProgress.done();
-      });
-  };
-
   useEffect(() => {
-    getAllTrendingMovies();
-    getAllTrendinSeries();
-    getAllTopRatedTvs();
+    const fetchData = async () => {
+      try {
+        NProgress.start();
+        const [moviesRes, seriesRes, topRatedRes] = await Promise.all([
+          fetch(
+            `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=${apiKey}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${apiReadAccessToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          ),
+          fetch(
+            `https://api.themoviedb.org/3/trending/tv/day?language=en-US&page=1&api_key=${apiKey}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${apiReadAccessToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          ),
+          fetch(
+            `https://api.themoviedb.org/3/tv/top_rated?api_key=${apiKey}&language=en-US`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${apiReadAccessToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          ),
+        ]);
+
+        if (moviesRes.ok && seriesRes.ok && topRatedRes.ok) {
+          const moviesData = await moviesRes.json();
+          const seriesData = await seriesRes.json();
+          const topRatedData = await topRatedRes.json();
+
+          setAllMovies(moviesData.results);
+          setAllSeries(seriesData.results);
+          setAllTopRatedTvs(topRatedData.results);
+        } else {
+          throw new Error("HTTP error");
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoaded(true);
+        NProgress.done();
+      }
+    };
+
+    fetchData();
   }, []);
+  
 
   const swiperOptionsMovies = {
     slidesPerView: 3,
+    lazy: true,
     loop: false,
     spaceBetween: 10,
     navigation: false,
@@ -163,6 +116,7 @@ function Categories() {
 
   const swiperOptionsSeries = {
     slidesPerView: 3,
+    lazy: true,
     loop: false,
     spaceBetween: 10,
     navigation: false,
@@ -185,6 +139,7 @@ function Categories() {
 
   const swiperOptionsNowPlayingSeries = {
     slidesPerView: 3,
+    lazy: true,
     loop: false,
     spaceBetween: 10,
     navigation: false,
@@ -243,7 +198,11 @@ function Categories() {
                   <Swiper {...swiperOptionsMovies} dir="rtl">
                     {allMovies.slice(0, 10).map((movie) => (
                       <SwiperSlide key={movie.id}>
-                        <MovieBox isGrid={true} isSlider={true} {...movie} />
+                        <Suspense
+                          fallback={<span className="loading-icon"></span>}
+                        >
+                          <MovieBox isGrid={true} isSlider={true} {...movie} />
+                        </Suspense>
                       </SwiperSlide>
                     ))}
                   </Swiper>
