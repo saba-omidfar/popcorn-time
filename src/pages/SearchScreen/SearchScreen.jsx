@@ -146,10 +146,22 @@ function SearchScreen() {
             value={searchValue}
             onChange={searchValueChangeHandler}
           />
-          <IoSearch
-            className="search-screen__search-icon"
-            onClick={searchMovieAndSeries}
-          />
+          {shownMovies.length > 0 ? (
+            <IoIosClose
+              className="close-searchbox-icon"
+              onClick={() => {
+                setSearchValue("");
+                setShownMovies([]);
+                setIsSearched(false);
+                setIsError(false);
+              }}
+            />
+          ) : (
+            <IoSearch
+              className="search-screen__search-icon"
+              onClick={searchMovieAndSeries}
+            />
+          )}
         </div>
         {isError ? (
           <Alert className="text-error" variant="filled" severity="error">
@@ -162,17 +174,6 @@ function SearchScreen() {
                 نتایج ({shownMovies.length})
               </span>
               <div className="d-flex align-items-center">
-                <span
-                  className="search-back__icon"
-                  onClick={() => {
-                    setSearchValue("");
-                    setShownMovies([]);
-                    setIsSearched(false);
-                    setIsError(false);
-                  }}
-                >
-                  <IoIosClose className="close-searchbox-icon" />
-                </span>
                 <Link to="/">
                   <IoArrowBackCircleOutline className="search-back__icon" />
                 </Link>

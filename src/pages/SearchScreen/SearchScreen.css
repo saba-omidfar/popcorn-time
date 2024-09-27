@@ -36,10 +36,11 @@
   font-size: 13px;
 }
 
-.search-screen__search-icon {
+.search-screen__search-icon,
+.close-searchbox-icon {
   position: absolute;
   left: 11px;
-  bottom: 17px;
+  bottom: 16px;
   font-size: 20px;
   color: var(--dark-color);
   transform: scale(1);
