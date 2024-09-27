@@ -9,6 +9,7 @@ import MovieBox from "../../Components/MovieBox/MovieBox";
 import SideMenu from "../../Components/SideMenu/SideMenu";
 import { useSession } from "../../Contexts/sessionContext";
 import { showToastError } from "../../Components/Toast/Toast";
+import { Alert } from "@mui/material";
 
 import { IoIosMenu } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
@@ -25,8 +26,9 @@ function SearchScreen() {
   const [shownMovies, setShownMovies] = useState([]);
   const [upcomingMovies, setUpcomingMovies] = useState([]);
   const [isSearched, setIsSearched] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  const { apikey, apiReadAccessToken } = useSession();
+  const { apiReadAccessToken } = useSession();
 
   const toggleSideMenu = () => {
     setSideMenuOpen(!sideMenuOpen);
@@ -62,7 +64,9 @@ function SearchScreen() {
     }
 
     setIsSearched(true);
+    setIsError(false);
     NProgress.start();
+
     fetch(
       `https://api.themoviedb.org/3/search/multi?query=${searchValue}&language=en-US`,
       {
@@ -82,7 +86,8 @@ function SearchScreen() {
       })
       .then((data) => {
         if (data.results.length === 0) {
-          showToastError("جستجوی شما با هیچ نتیجه ای همراه نبود!");
+          setShownMovies([]);
+          setIsError(true);
         }
         setShownMovies(data.results);
       })
@@ -111,8 +116,20 @@ function SearchScreen() {
   }, [searchValue]);
 
   useEffect(() => {
-    getUpcomingMovies();
-  }, []);
+    if (!isSearched && !isError) {
+      getUpcomingMovies();
+    }
+  }, [isSearched, isError, searchValue]);
+
+  useEffect(() => {
+    if (searchValue.length === 0) {
+      setIsSearched(false);
+      setIsError(false);
+      setShownMovies([]);
+      getUpcomingMovies();
+    }
+  }, [searchValue]);
+  ``;
 
   return (
     <>
@@ -134,11 +151,15 @@ function SearchScreen() {
             onClick={searchMovieAndSeries}
           />
         </div>
-        {!isSearched && shownMovies.length ? (
+        {isError ? (
+          <Alert className="text-error" variant="filled" severity="error">
+            جستجوی شما هیچ نتیجه‌ای به همراه نداشت
+          </Alert>
+        ) : shownMovies.length > 0 ? (
           <>
             <div className="search-results__header">
               <span className="search-results__title">
-                نتایج({shownMovies.length})
+                نتایج ({shownMovies.length})
               </span>
               <div className="d-flex align-items-center">
                 <span
@@ -147,6 +168,7 @@ function SearchScreen() {
                     setSearchValue("");
                     setShownMovies([]);
                     setIsSearched(false);
+                    setIsError(false);
                   }}
                 >
                   <IoIosClose className="close-searchbox-icon" />
@@ -188,25 +210,27 @@ function SearchScreen() {
             </div>
           </>
         ) : (
-          <div className="popular-movies__wrapper">
-            <div className="category-header mb-4">
-              <span className="category-title">جدیدترین فیلم‌ها</span>
-              <Link to="/movies/upcoming" className="all-categories ps-2 ">
+          !isSearched && (
+            <div className="popular-movies__wrapper">
+              <div className="category-header mb-4">
+                <span className="category-title">جدیدترین فیلم‌ها</span>
+                <Link to="/movies/upcoming" className="all-categories ps-2 ">
                   همه
                 </Link>
+              </div>
+              <div className="row ps-3">
+                {upcomingMovies &&
+                  upcomingMovies.map((upcomingMovie) => (
+                    <MovieBox
+                      key={upcomingMovie.id}
+                      {...upcomingMovie}
+                      isGrid={true}
+                      isSlider={false}
+                    />
+                  ))}
+              </div>
             </div>
-            <div className="row ps-3">
-              {upcomingMovies &&
-                upcomingMovies.map((upcomingMovie) => (
-                  <MovieBox
-                    key={upcomingMovie.id}
-                    {...upcomingMovie}
-                    isGrid={true}
-                    isSlider={false}
-                  />
-                ))}
-            </div>
-          </div>
+          )
         )}
       </div>
       <BottomBar activeBottom="search" />
