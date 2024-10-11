@@ -287,8 +287,8 @@ function SeriesPlayback() {
         status.favorite = !status.favorite;
         showToastSuccess(
           status.favorite
-            ? "از لیست علاقه‌مندی حذف شد"
-            : "به لیست علاقه‌مندی اضافه شد"
+            ? "به لیست علاقه‌مندی اضافه شد"
+            : "از لیست علاقه‌مندی حذف شد"
         );
       } else {
         console.error("Failed to toggle favorite status:", data);
